@@ -1,7 +1,7 @@
 <!doctype html>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="scotchTodo">
+<html ng-app="scotchFood">
 <head>
 	<!-- META -->
 	<meta charset="utf-8">
@@ -23,31 +23,29 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script><!-- load angular -->
 
 	<script src="js/controllers/main.js"></script> <!-- load up our controller -->
-	<script src="js/services/todos.js"></script> <!-- load our todo service -->
+	<script src="js/services/food.js"></script> <!-- load our todo service -->
 	<script src="js/core.js"></script> <!-- load our main application -->
 
 </head>
 <!-- SET THE CONTROLLER -->
-<body ng-controller="mainController">
+<body ng-controller="foodController">
 	<div class="container">
 
 		<!-- HEADER AND TODO COUNT -->
 		<div class="jumbotron text-center">
-			<h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+			<h1>Food Store <span class="label label-info">{{ food.length }}</span></h1>
 		</div>
 
 		<!-- TODO LIST -->
-		<div id="todo-list" class="row">
+		<div id="food-list" class="row">
 			<div class="col-sm-4 col-sm-offset-4">
-
-				
-
-				<!-- LOOP OVER THE TODOS IN $scope.todos -->
-				<div class="checkbox" ng-repeat="todo in todos">
-					<label>
-						<input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
-					</label>
-				</div>
+				<ul class="list-group">
+			  		<li class="list-group-item" ng-repeat="f in food">
+							<input type="checkbox" ng-click="deleteFood(f._id)">{{ f.name }}
+							------------------
+							${{f.price}}
+				  	</li>
+				</ul>
 
 				<p class="text-center" ng-show="loading">
 					<span class="fa fa-spinner fa-spin fa-3x"></span>
@@ -57,17 +55,20 @@
 		</div>
 
 		<!-- FORM TO CREATE TODOS -->
-		<div id="todo-form" class="row">
+		<div id="food-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
-				<form>
+				<form class="form-inline">
 					<div class="form-group">
-
 						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-						<input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
+						<input type="text" class="form-control input-lg text-center col-xs-6" placeholder="Food Name" ng-model="formData.name">
 					</div>
-
+					<div class="form-group">
+						<input type="number" step="0.01" class="form-control input-lg text-center col-xs-6" placeholder="Food Price" ng-model="formData.price">
+					</div>
 					<!-- createToDo() WILL CREATE NEW TODOS -->
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+					<button type="submit" class="btn btn-primary btn-lg" ng-click="createFood()">Add</button>
+					<button type="submit" class="btn btn-primary btn-lg" ng-click="totalPrice()">Total</button>
+					<span>{{total}}</span>
 				</form>
 			</div>
 		</div>
